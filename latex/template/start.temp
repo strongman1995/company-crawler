@@ -1,0 +1,4 @@
+d:
+cd $path
+pdflatex.exe "report.tex"
+exit

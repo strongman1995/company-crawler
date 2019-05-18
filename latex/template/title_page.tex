@@ -1,0 +1,12 @@
+    \begin{tikzpicture}[remember picture, overlay]
+    \fill[blueBottom] (current page.west) rectangle (current page.north east);
+    \node [anchor=north, white] at ($(current page.north) + (0mm, -7cm)$)  {\fontsize{80}{80}\bfseries\selectfont \productname};
+    \node [anchor=north, white] at ($(current page.east) + (-6cm, 3cm)$)  {\fontsize{20}{20}\bfseries\selectfont ---\companyname};
+    \node [anchor=north, blueBottom] at ($(current page.south east) + (-3.3cm, 3cm)$)  {\fontsize{18}{18}\scshape\selectfont \reporttype};
+    \node [anchor=north, blueBottom] at ($(current page.south east) + (-3.5cm, 2cm)$)  {\fontsize{17}{17}\scshape\selectfont \today};
+     \end{tikzpicture}
+     \vspace{0.4\paperheight}\\
+    \begin{center}
+      \includegraphics[width=200pt]{\logofigure}
+      \newpage
+    \end{center}

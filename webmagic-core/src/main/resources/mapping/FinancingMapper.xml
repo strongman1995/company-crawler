@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.thu.info.mapper.FinancingMapper" >
+  <resultMap id="BaseResultMap" type="cn.thu.info.model.Financing" >
+    <id column="f_id" property="fId" jdbcType="INTEGER" />
+    <result column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="round" property="round" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="VARCHAR" />
+    <result column="amount_int" property="amountInt" jdbcType="INTEGER" />
+    <result column="amount_currency" property="amountCurrency" jdbcType="VARCHAR" />
+    <result column="i_id" property="iId" jdbcType="INTEGER" />
+    <result column="i_name" property="iName" jdbcType="VARCHAR" />
+    <result column="i_ucode" property="iUcode" jdbcType="VARCHAR" />
+    <result column="f_date" property="fDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    f_id, c_id, round, amount, amount_int, amount_currency, i_id, i_name, i_ucode, f_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.thu.info.model.FinancingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from financing
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from financing
+    where f_id = #{fId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from financing
+    where f_id = #{fId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.thu.info.model.FinancingExample" >
+    delete from financing
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.thu.info.model.Financing" >
+    <selectKey resultType="java.lang.Integer" keyProperty="fId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into financing (c_id, round, amount, 
+      amount_int, amount_currency, i_id, 
+      i_name, i_ucode, f_date
+      )
+    values (#{cId,jdbcType=INTEGER}, #{round,jdbcType=VARCHAR}, #{amount,jdbcType=VARCHAR}, 
+      #{amountInt,jdbcType=INTEGER}, #{amountCurrency,jdbcType=VARCHAR}, #{iId,jdbcType=INTEGER}, 
+      #{iName,jdbcType=VARCHAR}, #{iUcode,jdbcType=VARCHAR}, #{fDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.thu.info.model.Financing" >
+    <selectKey resultType="java.lang.Integer" keyProperty="fId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into financing
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="round != null" >
+        round,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="amountInt != null" >
+        amount_int,
+      </if>
+      <if test="amountCurrency != null" >
+        amount_currency,
+      </if>
+      <if test="iId != null" >
+        i_id,
+      </if>
+      <if test="iName != null" >
+        i_name,
+      </if>
+      <if test="iUcode != null" >
+        i_ucode,
+      </if>
+      <if test="fDate != null" >
+        f_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="round != null" >
+        #{round,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="amountInt != null" >
+        #{amountInt,jdbcType=INTEGER},
+      </if>
+      <if test="amountCurrency != null" >
+        #{amountCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="iId != null" >
+        #{iId,jdbcType=INTEGER},
+      </if>
+      <if test="iName != null" >
+        #{iName,jdbcType=VARCHAR},
+      </if>
+      <if test="iUcode != null" >
+        #{iUcode,jdbcType=VARCHAR},
+      </if>
+      <if test="fDate != null" >
+        #{fDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.thu.info.model.FinancingExample" resultType="java.lang.Integer" >
+    select count(*) from financing
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update financing
+    <set >
+      <if test="record.fId != null" >
+        f_id = #{record.fId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cId != null" >
+        c_id = #{record.cId,jdbcType=INTEGER},
+      </if>
+      <if test="record.round != null" >
+        round = #{record.round,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amountInt != null" >
+        amount_int = #{record.amountInt,jdbcType=INTEGER},
+      </if>
+      <if test="record.amountCurrency != null" >
+        amount_currency = #{record.amountCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iId != null" >
+        i_id = #{record.iId,jdbcType=INTEGER},
+      </if>
+      <if test="record.iName != null" >
+        i_name = #{record.iName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iUcode != null" >
+        i_ucode = #{record.iUcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fDate != null" >
+        f_date = #{record.fDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update financing
+    set f_id = #{record.fId,jdbcType=INTEGER},
+      c_id = #{record.cId,jdbcType=INTEGER},
+      round = #{record.round,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=VARCHAR},
+      amount_int = #{record.amountInt,jdbcType=INTEGER},
+      amount_currency = #{record.amountCurrency,jdbcType=VARCHAR},
+      i_id = #{record.iId,jdbcType=INTEGER},
+      i_name = #{record.iName,jdbcType=VARCHAR},
+      i_ucode = #{record.iUcode,jdbcType=VARCHAR},
+      f_date = #{record.fDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.thu.info.model.Financing" >
+    update financing
+    <set >
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="round != null" >
+        round = #{round,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="amountInt != null" >
+        amount_int = #{amountInt,jdbcType=INTEGER},
+      </if>
+      <if test="amountCurrency != null" >
+        amount_currency = #{amountCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="iId != null" >
+        i_id = #{iId,jdbcType=INTEGER},
+      </if>
+      <if test="iName != null" >
+        i_name = #{iName,jdbcType=VARCHAR},
+      </if>
+      <if test="iUcode != null" >
+        i_ucode = #{iUcode,jdbcType=VARCHAR},
+      </if>
+      <if test="fDate != null" >
+        f_date = #{fDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.thu.info.model.Financing" >
+    update financing
+    set c_id = #{cId,jdbcType=INTEGER},
+      round = #{round,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=VARCHAR},
+      amount_int = #{amountInt,jdbcType=INTEGER},
+      amount_currency = #{amountCurrency,jdbcType=VARCHAR},
+      i_id = #{iId,jdbcType=INTEGER},
+      i_name = #{iName,jdbcType=VARCHAR},
+      i_ucode = #{iUcode,jdbcType=VARCHAR},
+      f_date = #{fDate,jdbcType=TIMESTAMP}
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+</mapper>

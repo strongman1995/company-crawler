@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.thu.info.mapper.ReginfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.thu.info.model.Reginfo" >
+    <id column="r_id" property="rId" jdbcType="INTEGER" />
+    <result column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="reg_id" property="regId" jdbcType="VARCHAR" />
+    <result column="leal_person" property="lealPerson" jdbcType="VARCHAR" />
+    <result column="reg_date" property="regDate" jdbcType="TIMESTAMP" />
+    <result column="reg_capital" property="regCapital" jdbcType="VARCHAR" />
+    <result column="reg_capital_int" property="regCapitalInt" jdbcType="INTEGER" />
+    <result column="reg_capital_currency" property="regCapitalCurrency" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.thu.info.model.Reginfo" extends="BaseResultMap" >
+    <result column="reg_location" property="regLocation" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    r_id, c_id, reg_id, leal_person, reg_date, reg_capital, reg_capital_int, reg_capital_currency, 
+    company_name
+  </sql>
+  <sql id="Blob_Column_List" >
+    reg_location
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.thu.info.model.ReginfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from reg_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.thu.info.model.ReginfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from reg_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from reg_info
+    where r_id = #{rId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from reg_info
+    where r_id = #{rId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.thu.info.model.ReginfoExample" >
+    delete from reg_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.thu.info.model.Reginfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="rId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into reg_info (c_id, reg_id, leal_person, 
+      reg_date, reg_capital, reg_capital_int, 
+      reg_capital_currency, company_name, reg_location
+      )
+    values (#{cId,jdbcType=INTEGER}, #{regId,jdbcType=VARCHAR}, #{lealPerson,jdbcType=VARCHAR}, 
+      #{regDate,jdbcType=TIMESTAMP}, #{regCapital,jdbcType=VARCHAR}, #{regCapitalInt,jdbcType=INTEGER}, 
+      #{regCapitalCurrency,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{regLocation,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.thu.info.model.Reginfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="rId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into reg_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="regId != null" >
+        reg_id,
+      </if>
+      <if test="lealPerson != null" >
+        leal_person,
+      </if>
+      <if test="regDate != null" >
+        reg_date,
+      </if>
+      <if test="regCapital != null" >
+        reg_capital,
+      </if>
+      <if test="regCapitalInt != null" >
+        reg_capital_int,
+      </if>
+      <if test="regCapitalCurrency != null" >
+        reg_capital_currency,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="regLocation != null" >
+        reg_location,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="regId != null" >
+        #{regId,jdbcType=VARCHAR},
+      </if>
+      <if test="lealPerson != null" >
+        #{lealPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="regDate != null" >
+        #{regDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regCapital != null" >
+        #{regCapital,jdbcType=VARCHAR},
+      </if>
+      <if test="regCapitalInt != null" >
+        #{regCapitalInt,jdbcType=INTEGER},
+      </if>
+      <if test="regCapitalCurrency != null" >
+        #{regCapitalCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="regLocation != null" >
+        #{regLocation,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.thu.info.model.ReginfoExample" resultType="java.lang.Integer" >
+    select count(*) from reg_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update reg_info
+    <set >
+      <if test="record.rId != null" >
+        r_id = #{record.rId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cId != null" >
+        c_id = #{record.cId,jdbcType=INTEGER},
+      </if>
+      <if test="record.regId != null" >
+        reg_id = #{record.regId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lealPerson != null" >
+        leal_person = #{record.lealPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regDate != null" >
+        reg_date = #{record.regDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.regCapital != null" >
+        reg_capital = #{record.regCapital,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regCapitalInt != null" >
+        reg_capital_int = #{record.regCapitalInt,jdbcType=INTEGER},
+      </if>
+      <if test="record.regCapitalCurrency != null" >
+        reg_capital_currency = #{record.regCapitalCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regLocation != null" >
+        reg_location = #{record.regLocation,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update reg_info
+    set r_id = #{record.rId,jdbcType=INTEGER},
+      c_id = #{record.cId,jdbcType=INTEGER},
+      reg_id = #{record.regId,jdbcType=VARCHAR},
+      leal_person = #{record.lealPerson,jdbcType=VARCHAR},
+      reg_date = #{record.regDate,jdbcType=TIMESTAMP},
+      reg_capital = #{record.regCapital,jdbcType=VARCHAR},
+      reg_capital_int = #{record.regCapitalInt,jdbcType=INTEGER},
+      reg_capital_currency = #{record.regCapitalCurrency,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      reg_location = #{record.regLocation,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update reg_info
+    set r_id = #{record.rId,jdbcType=INTEGER},
+      c_id = #{record.cId,jdbcType=INTEGER},
+      reg_id = #{record.regId,jdbcType=VARCHAR},
+      leal_person = #{record.lealPerson,jdbcType=VARCHAR},
+      reg_date = #{record.regDate,jdbcType=TIMESTAMP},
+      reg_capital = #{record.regCapital,jdbcType=VARCHAR},
+      reg_capital_int = #{record.regCapitalInt,jdbcType=INTEGER},
+      reg_capital_currency = #{record.regCapitalCurrency,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.thu.info.model.Reginfo" >
+    update reg_info
+    <set >
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="regId != null" >
+        reg_id = #{regId,jdbcType=VARCHAR},
+      </if>
+      <if test="lealPerson != null" >
+        leal_person = #{lealPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="regDate != null" >
+        reg_date = #{regDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regCapital != null" >
+        reg_capital = #{regCapital,jdbcType=VARCHAR},
+      </if>
+      <if test="regCapitalInt != null" >
+        reg_capital_int = #{regCapitalInt,jdbcType=INTEGER},
+      </if>
+      <if test="regCapitalCurrency != null" >
+        reg_capital_currency = #{regCapitalCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="regLocation != null" >
+        reg_location = #{regLocation,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.thu.info.model.Reginfo" >
+    update reg_info
+    set c_id = #{cId,jdbcType=INTEGER},
+      reg_id = #{regId,jdbcType=VARCHAR},
+      leal_person = #{lealPerson,jdbcType=VARCHAR},
+      reg_date = #{regDate,jdbcType=TIMESTAMP},
+      reg_capital = #{regCapital,jdbcType=VARCHAR},
+      reg_capital_int = #{regCapitalInt,jdbcType=INTEGER},
+      reg_capital_currency = #{regCapitalCurrency,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      reg_location = #{regLocation,jdbcType=LONGVARCHAR}
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.thu.info.model.Reginfo" >
+    update reg_info
+    set c_id = #{cId,jdbcType=INTEGER},
+      reg_id = #{regId,jdbcType=VARCHAR},
+      leal_person = #{lealPerson,jdbcType=VARCHAR},
+      reg_date = #{regDate,jdbcType=TIMESTAMP},
+      reg_capital = #{regCapital,jdbcType=VARCHAR},
+      reg_capital_int = #{regCapitalInt,jdbcType=INTEGER},
+      reg_capital_currency = #{regCapitalCurrency,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR}
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+</mapper>

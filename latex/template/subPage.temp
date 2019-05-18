@@ -1,0 +1,14 @@
+\newpage
+\sectiontitle{$sectionTitle}
+    \scriptsize
+    \tiny{\emph{$sectionUrl}}
+    \normalsize
+    \begin{itemize}
+      {\item 关键词: $sectionKeywords}
+      {$sectionContent}
+   \end{itemize}
+    
+    \begin{center}
+      \includegraphics[width=400pt]{figures/$sectionImg}
+    \end{center}
+    \vspace{0.1cm}\par

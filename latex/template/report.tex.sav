@@ -1,0 +1,143 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[british]{babel}
+\usepackage{lipsum}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{ctex}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{changepage}
+\usetikzlibrary{calc, intersections}
+\usepackage{fancyhdr}
+
+\cfoot{}
+\rfoot{
+\begin{tikzpicture}[remember picture, overlay]
+\draw[blueBottom, line width=0.08cm] ($(current page.south east) + (0, 1.3cm)$) -- ($(current page.south east) + (-4cm, 1.3cm)$);
+\node[blueBottom] at ($(current page.south east) + (-3cm, 2cm)$) {\fontsize{20}{20}\selectfont\bfseries\thepage};
+\end{tikzpicture}
+}
+\renewcommand{\headrulewidth}{0pt}
+
+\definecolor{blueBottom}{HTML}{008DD5}
+\definecolor{titleShadowColor}{HTML}{CCCCCC}
+\definecolor{backgroundColor}{HTML}{FFFFFF}
+
+\gdef\productname{人人贷}
+\gdef\companyname{北京人人友信投资有限公司}
+\gdef\reporttype{企业信息报告}
+\gdef\logofigure{figures/logo.png}
+
+\newcommand{\chaptertitle}[1]{
+\begin{tikzpicture}[remember picture, overlay]
+\fill[blueBottom] ($(current page.north west) + (0, -2cm)$) -- ++(7cm, 0) -- ++(3cm, -3cm) -- ++(-10cm, 0cm) -- cycle;
+\node[white] at ($(current page.north west) + (4cm, -3.5cm)$) {\fontsize{40}{40}\selectfont\bfseries #1};
+\end{tikzpicture}
+\vspace{1.3cm}\par
+}
+
+\newcommand{\sectiontitle}[1]{
+\begin{tikzpicture}[remember picture, overlay]
+\fill[blueBottom] (-2cm, -0.5cm) rectangle ++(1cm, 1cm);
+\node[anchor=west] at ++(-0.7cm, 0cm) {\color{black}\fontsize{20}{20}\selectfont\bfseries#1};
+\end{tikzpicture}
+\vspace{0.8cm}\par
+}
+\newcommand{\subsectiontitle}[2]{
+\begin{tikzpicture}[remember picture, overlay]
+\draw[blueBottom, very thick] (-1.2cm, -0.3cm) rectangle ++(0.6cm, 0.6cm);
+\node[anchor=west] at ++(-0.4cm, 0cm) {\color{black}\fontsize{15}{15}\selectfont\itshape#1};
+\end{tikzpicture}
+\vspace{0.3cm}\par
+\begin{adjustwidth}{2em}{0em}
+{\noindent#2}
+\end{adjustwidth}
+\vspace{0.1cm}\par
+}
+\begin{document}
+    % Title Page
+    \pagestyle{empty}
+    \input{title_page.tex}
+
+    % Content Page
+    %\input{content.tex}
+    \pagenumbering{arabic} % start to numbering the pages
+    \pagestyle{fancy} % use the personalized footer
+    % Abstract
+    \chaptertitle{公司概述}
+    {人人贷（renrendai.com），系人人友信集团旗下公司及独立品牌。自2010年5月成立至今，人人贷的服务已覆盖全国30余省的2000多个地区，服务了几十万名客户，成功帮助他们通过信用申请获得融资借款，或通过自主出借获得稳定收益。作为中国最早一批基于互联网的P2P信用借贷服务平台，人人贷以其诚信、透明、公平、高效、创新的特征赢得了良好的用户口碑。现在，人人贷已经成为行业内最具影响力的品牌之一。使命实现个人的信用自主和金融自由。愿景打造一个人人参与、人人自由、人人平等的互联网个人金融服务平台。核心价值 释放用户借款人通过个人信用申请借款，获得资金；理财人通过公开信息自主选择进行投资、获得收益。建立互联网时代的个人金融风险定价体系通过有效的个人信用模型和大数据挖掘，逐步建立并完善符合时代特征的个人金融风险定价体系。实现更低借款成本和更稳健投资收益于精准的个人金融风险定价体系和安全分散有保障的投资机制，借款人和理财人的权益均可得到充分的保障和满足。}\\
+    \\
+    \includegraphics[width=380pt]{figures/abstract.jpg}
+    \newpage
+    % capital information
+    \chaptertitle{资本信息}
+    \sectiontitle{工商注册信息}
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{cc}
+                         \arrayrulecolor{blueBottom} \toprule[1.4pt]
+                         注册号 & 110108015666703 \\
+                         经营状态 & 在营（开营）企业 \\
+                         法定代表 & 易源俏 \\
+                         股东 & 北京弘合网络科技投资中心（有限合伙） \\
+                          & 北京众合普信投资管理中心（有限合伙） \\
+                          & 北京弘合投资中心（有限合伙） \\
+                          & 郭遐 \\
+                          & 裴思杨 \\
+                          & 田力 \\
+                          & 许丽珠 \\
+                          & 北京友众融信投资管理有限公司 \\
+                         公司类型 & 有限责任公司（自然人投资或控股） \\
+                         成立日期 & 2013/3/6 \\
+                         注册资本 & 2500万元 \\
+                         住所 & 北京市朝阳区曙光西里5号院16号楼6层601B \\
+                         \bottomrule[1.4pt]
+                       \end{tabular}
+                    \end{table}
+    \sectiontitle{融资信息}
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{cccc}
+     \arrayrulecolor{blueBottom} \toprule[1.4pt]
+     阶段 & 融资金额 & 投资方 & 融资时间 \\
+     \hline
+     天使轮 & 数百万人民币 & 弘合基金 & 2016/6/1 \\
+     A轮 & 2000万人民币 & 挚信资本 & 2012/11/1 \\
+     不明确 & 1.3亿美元 & 挚信资本 & 2014/1/7 \\
+     \bottomrule[1.4pt]
+   \end{tabular}
+\end{table}
+    \newpage
+    % web page information
+    \chaptertitle{网站信息}
+    \sectiontitle{概述}
+    \subsectiontitle{顶栏}
+    {首页，我要理财，我要借款，新手指引，关于我们}
+    \subsectiontitle{低栏}
+    {公司介绍，安全保障，媒体报道，社会责任，招贤纳士，网站地图，帮助中心，联系我们}
+
+    \sectiontitle{顶栏---我要理财}
+    {人人贷理财品牌全面升级！Wealth Evolution（简称WE.COM），原人人贷平台（renrendai.com）理财端的全面升级，将为广大理财用户提供更多元的投资选择与更优质的综合理财服务。}
+    \begin{center}
+      \includegraphics[width=400pt]{figures/top.jpg}
+    \end{center}
+    \vspace{0.1cm}\par
+    \sectiontitle{顶栏---我要借款}
+    {人人贷借款、借款费率、借款优势、轻松四步，简单借款}
+     \begin{center}
+      \includegraphics[width=400pt]{figures/top2.jpg}
+    \end{center}
+    \vspace{0.1cm}\par
+    \sectiontitle{顶栏---新手指引}
+    {人人贷平台（renrendai.com）是一个主要面对小额借款用户和小额信贷服务以及技术输出机构的网络平台。借款用户可以在人人贷平台上注册并通过人人贷的合作机构[包括但不限于人人贷金融信息服务（北京）有限公司]提供的小额信贷服务（包括但不限于信用评估和管理、信息推荐、居间撮合等）获得信用评级，并通过该等合作机构发布借款请求来实现个人快捷的融资需要。}
+    \begin{center}
+      \includegraphics[width=400pt]{figures/top2.jpg}
+    \end{center}
+    \vspace{0.1cm}\par
+    \sectiontitle{顶栏---关于我们}
+    {人人贷(renrendai.com)，系人人友信集团旗下公司及独立品牌。自2010年5月成立至今，人人贷的服务已覆盖了全国30余个省的2000多个地区，服务了几十万名客户，成功帮助他们通过信用申请获得融资借款，或通过自主出借获得稳定收益。作为中国最早的一批基于互联网的P2P信用借贷服务平台，人人贷以其诚信、透明、公平、高效、创新的特征赢得了良好的用户口碑。现在，人人贷已成为行业内最具影响力的品牌之一。}
+    \begin{center}
+      \includegraphics[width=400pt]{figures/top3.jpg}
+    \end{center}
+    \vspace{0.1cm}\par
+\end{document}

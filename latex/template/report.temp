@@ -1,0 +1,110 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[british]{babel}
+\usepackage{lipsum}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{ctex}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{changepage}
+\usetikzlibrary{calc, intersections}
+\usepackage{fancyhdr}
+
+\cfoot{}
+\rfoot{
+\begin{tikzpicture}[remember picture, overlay]
+\draw[blueBottom, line width=0.08cm] ($(current page.south east) + (0, 1.3cm)$) -- ($(current page.south east) + (-4cm, 1.3cm)$);
+\node[blueBottom] at ($(current page.south east) + (-3cm, 2cm)$) {\fontsize{20}{20}\selectfont\bfseries\thepage};
+\end{tikzpicture}
+}
+\renewcommand{\headrulewidth}{0pt}
+
+\definecolor{blueBottom}{HTML}{008DD5}
+\definecolor{titleShadowColor}{HTML}{CCCCCC}
+\definecolor{backgroundColor}{HTML}{FFFFFF}
+
+\gdef\productname{$productname}
+\gdef\companyname{$companyname}
+\gdef\reporttype{企业信息报告}
+\gdef\logofigure{figures/logo.png}
+
+\newcommand{\chaptertitle}[1]{
+\begin{tikzpicture}[remember picture, overlay]
+\fill[blueBottom] ($(current page.north west) + (0, -2cm)$) -- ++(7cm, 0) -- ++(3cm, -3cm) -- ++(-10cm, 0cm) -- cycle;
+\node[white] at ($(current page.north west) + (4cm, -3.5cm)$) {\fontsize{40}{40}\selectfont\bfseries #1};
+\end{tikzpicture}
+\vspace{1.3cm}\par
+}
+
+\newcommand{\sectiontitle}[1]{
+\begin{tikzpicture}[remember picture, overlay]
+\fill[blueBottom] (-2cm, -0.5cm) rectangle ++(1cm, 1cm);
+\node[anchor=west] at ++(-0.7cm, 0cm) {\color{black}\fontsize{20}{20}\selectfont\bfseries#1};
+\end{tikzpicture}
+\vspace{0.8cm}\par
+}
+\newcommand{\subsectiontitle}[2]{
+\begin{tikzpicture}[remember picture, overlay]
+\draw[blueBottom, very thick] (-1.2cm, -0.3cm) rectangle ++(0.6cm, 0.6cm);
+\node[anchor=west] at ++(-0.4cm, 0cm) {\color{black}\fontsize{15}{15}\selectfont\itshape#1};
+\end{tikzpicture}
+\vspace{0.3cm}\par
+\begin{adjustwidth}{2em}{0em}
+{\noindent#2}
+\end{adjustwidth}
+\vspace{0.1cm}\par
+}
+\begin{document}
+    % Title Page
+    \pagestyle{empty}
+    \input{title_page.tex}
+
+    % Content Page
+    %\input{content.tex}
+    \pagenumbering{arabic} % start to numbering the pages
+    \pagestyle{fancy} % use the personalized footer
+    % Abstract
+    \chaptertitle{公司概述}
+    {$companyDesc}
+
+    {$companySetupTime}
+
+    {$companyWebsite}
+    \\
+    \includegraphics[width=380pt]{figures/abstract.png}
+    \newpage
+    % capital information
+    \chaptertitle{资本信息}
+    \sectiontitle{工商注册信息}
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{cc}
+                         \arrayrulecolor{blueBottom} \toprule[1.4pt]
+                         注册号 & $regId \\
+                         法定代表 & $lealPerson \\
+                         成立日期 & $regDate \\
+                         注册资本 & $regCapital \\
+                         住所 & $regLocation \\
+                         \bottomrule[1.4pt]
+                       \end{tabular}
+                    \end{table}
+    \sectiontitle{融资信息}
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{cccc}
+     \arrayrulecolor{blueBottom} \toprule[1.4pt]
+     阶段 & 融资金额 & 投资方 & 融资时间 \\
+     \hline
+     $finacingInfo
+     \bottomrule[1.4pt]
+   \end{tabular}
+\end{table}
+    \newpage
+    % web page information
+    \chaptertitle{网站信息}
+    \sectiontitle{概述}
+    \subsectiontitle{顶栏}
+    {$headTitle}
+    \subsectiontitle{底栏}
+    {$tailTitle}
+

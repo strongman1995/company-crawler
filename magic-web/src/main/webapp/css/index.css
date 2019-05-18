@@ -1,0 +1,31 @@
+#search-key {
+    height: 53px;
+    font-size: 1.1em;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    outline: 0;
+    border: 1;
+    box-shadow: none;
+    z-index: 2;
+}
+#s-i-bt {
+    height: 53px;
+    width: 112px;
+    background: #fdd26d url("../pics/yue-sprit001.png") 50% -125px no-repeat;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+    z-index: 2;
+    margin-left: -1px;
+}
+.m-title{
+    font-size: 24px;
+}
+.m-search{
+    margin-top: 15%;
+    margin-bottom: 5%;
+}
+.res-text{
+    margin-bottom: 10px;
+}

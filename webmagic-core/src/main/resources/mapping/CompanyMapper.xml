@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.thu.info.mapper.CompanyMapper" >
+  <resultMap id="BaseResultMap" type="cn.thu.info.model.Company" >
+    <id column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="setup_time" property="setupTime" jdbcType="TIMESTAMP" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="financing_step" property="financingStep" jdbcType="VARCHAR" />
+    <result column="field_1" property="field1" jdbcType="VARCHAR" />
+    <result column="field_2" property="field2" jdbcType="VARCHAR" />
+    <result column="field_3" property="field3" jdbcType="VARCHAR" />
+    <result column="company_img" property="companyImg" jdbcType="VARCHAR" />
+    <result column="founder_1" property="founder1" jdbcType="VARCHAR" />
+    <result column="founder_2" property="founder2" jdbcType="VARCHAR" />
+    <result column="founder_3" property="founder3" jdbcType="VARCHAR" />
+    <result column="founder_4" property="founder4" jdbcType="VARCHAR" />
+    <result column="founder_5" property="founder5" jdbcType="VARCHAR" />
+    <result column="founder_6" property="founder6" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.thu.info.model.Company" extends="BaseResultMap" >
+    <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    c_id, name, website, company_name, setup_time, city, financing_step, field_1, field_2, 
+    field_3, company_img, founder_1, founder_2, founder_3, founder_4, founder_5, founder_6, 
+    source
+  </sql>
+  <sql id="Blob_Column_List" >
+    introduction
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.thu.info.model.CompanyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.thu.info.model.CompanyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from company
+    where c_id = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from company
+    where c_id = #{cId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.thu.info.model.CompanyExample" >
+    delete from company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.thu.info.model.Company" >
+    <selectKey resultType="java.lang.Integer" keyProperty="cId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into company (name, website, company_name, 
+      setup_time, city, financing_step, 
+      field_1, field_2, field_3, 
+      company_img, founder_1, founder_2, 
+      founder_3, founder_4, founder_5, 
+      founder_6, source, introduction
+      )
+    values (#{name,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{setupTime,jdbcType=TIMESTAMP}, #{city,jdbcType=VARCHAR}, #{financingStep,jdbcType=VARCHAR}, 
+      #{field1,jdbcType=VARCHAR}, #{field2,jdbcType=VARCHAR}, #{field3,jdbcType=VARCHAR}, 
+      #{companyImg,jdbcType=VARCHAR}, #{founder1,jdbcType=VARCHAR}, #{founder2,jdbcType=VARCHAR}, 
+      #{founder3,jdbcType=VARCHAR}, #{founder4,jdbcType=VARCHAR}, #{founder5,jdbcType=VARCHAR}, 
+      #{founder6,jdbcType=VARCHAR}, #{source,jdbcType=INTEGER}, #{introduction,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.thu.info.model.Company" >
+    <selectKey resultType="java.lang.Integer" keyProperty="cId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="website != null" >
+        website,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="setupTime != null" >
+        setup_time,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="financingStep != null" >
+        financing_step,
+      </if>
+      <if test="field1 != null" >
+        field_1,
+      </if>
+      <if test="field2 != null" >
+        field_2,
+      </if>
+      <if test="field3 != null" >
+        field_3,
+      </if>
+      <if test="companyImg != null" >
+        company_img,
+      </if>
+      <if test="founder1 != null" >
+        founder_1,
+      </if>
+      <if test="founder2 != null" >
+        founder_2,
+      </if>
+      <if test="founder3 != null" >
+        founder_3,
+      </if>
+      <if test="founder4 != null" >
+        founder_4,
+      </if>
+      <if test="founder5 != null" >
+        founder_5,
+      </if>
+      <if test="founder6 != null" >
+        founder_6,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="setupTime != null" >
+        #{setupTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="financingStep != null" >
+        #{financingStep,jdbcType=VARCHAR},
+      </if>
+      <if test="field1 != null" >
+        #{field1,jdbcType=VARCHAR},
+      </if>
+      <if test="field2 != null" >
+        #{field2,jdbcType=VARCHAR},
+      </if>
+      <if test="field3 != null" >
+        #{field3,jdbcType=VARCHAR},
+      </if>
+      <if test="companyImg != null" >
+        #{companyImg,jdbcType=VARCHAR},
+      </if>
+      <if test="founder1 != null" >
+        #{founder1,jdbcType=VARCHAR},
+      </if>
+      <if test="founder2 != null" >
+        #{founder2,jdbcType=VARCHAR},
+      </if>
+      <if test="founder3 != null" >
+        #{founder3,jdbcType=VARCHAR},
+      </if>
+      <if test="founder4 != null" >
+        #{founder4,jdbcType=VARCHAR},
+      </if>
+      <if test="founder5 != null" >
+        #{founder5,jdbcType=VARCHAR},
+      </if>
+      <if test="founder6 != null" >
+        #{founder6,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=INTEGER},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.thu.info.model.CompanyExample" resultType="java.lang.Integer" >
+    select count(*) from company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update company
+    <set >
+      <if test="record.cId != null" >
+        c_id = #{record.cId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.website != null" >
+        website = #{record.website,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.setupTime != null" >
+        setup_time = #{record.setupTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.financingStep != null" >
+        financing_step = #{record.financingStep,jdbcType=VARCHAR},
+      </if>
+      <if test="record.field1 != null" >
+        field_1 = #{record.field1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.field2 != null" >
+        field_2 = #{record.field2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.field3 != null" >
+        field_3 = #{record.field3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyImg != null" >
+        company_img = #{record.companyImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.founder1 != null" >
+        founder_1 = #{record.founder1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.founder2 != null" >
+        founder_2 = #{record.founder2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.founder3 != null" >
+        founder_3 = #{record.founder3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.founder4 != null" >
+        founder_4 = #{record.founder4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.founder5 != null" >
+        founder_5 = #{record.founder5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.founder6 != null" >
+        founder_6 = #{record.founder6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=INTEGER},
+      </if>
+      <if test="record.introduction != null" >
+        introduction = #{record.introduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update company
+    set c_id = #{record.cId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      website = #{record.website,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      setup_time = #{record.setupTime,jdbcType=TIMESTAMP},
+      city = #{record.city,jdbcType=VARCHAR},
+      financing_step = #{record.financingStep,jdbcType=VARCHAR},
+      field_1 = #{record.field1,jdbcType=VARCHAR},
+      field_2 = #{record.field2,jdbcType=VARCHAR},
+      field_3 = #{record.field3,jdbcType=VARCHAR},
+      company_img = #{record.companyImg,jdbcType=VARCHAR},
+      founder_1 = #{record.founder1,jdbcType=VARCHAR},
+      founder_2 = #{record.founder2,jdbcType=VARCHAR},
+      founder_3 = #{record.founder3,jdbcType=VARCHAR},
+      founder_4 = #{record.founder4,jdbcType=VARCHAR},
+      founder_5 = #{record.founder5,jdbcType=VARCHAR},
+      founder_6 = #{record.founder6,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=INTEGER},
+      introduction = #{record.introduction,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update company
+    set c_id = #{record.cId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      website = #{record.website,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      setup_time = #{record.setupTime,jdbcType=TIMESTAMP},
+      city = #{record.city,jdbcType=VARCHAR},
+      financing_step = #{record.financingStep,jdbcType=VARCHAR},
+      field_1 = #{record.field1,jdbcType=VARCHAR},
+      field_2 = #{record.field2,jdbcType=VARCHAR},
+      field_3 = #{record.field3,jdbcType=VARCHAR},
+      company_img = #{record.companyImg,jdbcType=VARCHAR},
+      founder_1 = #{record.founder1,jdbcType=VARCHAR},
+      founder_2 = #{record.founder2,jdbcType=VARCHAR},
+      founder_3 = #{record.founder3,jdbcType=VARCHAR},
+      founder_4 = #{record.founder4,jdbcType=VARCHAR},
+      founder_5 = #{record.founder5,jdbcType=VARCHAR},
+      founder_6 = #{record.founder6,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.thu.info.model.Company" >
+    update company
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="setupTime != null" >
+        setup_time = #{setupTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="financingStep != null" >
+        financing_step = #{financingStep,jdbcType=VARCHAR},
+      </if>
+      <if test="field1 != null" >
+        field_1 = #{field1,jdbcType=VARCHAR},
+      </if>
+      <if test="field2 != null" >
+        field_2 = #{field2,jdbcType=VARCHAR},
+      </if>
+      <if test="field3 != null" >
+        field_3 = #{field3,jdbcType=VARCHAR},
+      </if>
+      <if test="companyImg != null" >
+        company_img = #{companyImg,jdbcType=VARCHAR},
+      </if>
+      <if test="founder1 != null" >
+        founder_1 = #{founder1,jdbcType=VARCHAR},
+      </if>
+      <if test="founder2 != null" >
+        founder_2 = #{founder2,jdbcType=VARCHAR},
+      </if>
+      <if test="founder3 != null" >
+        founder_3 = #{founder3,jdbcType=VARCHAR},
+      </if>
+      <if test="founder4 != null" >
+        founder_4 = #{founder4,jdbcType=VARCHAR},
+      </if>
+      <if test="founder5 != null" >
+        founder_5 = #{founder5,jdbcType=VARCHAR},
+      </if>
+      <if test="founder6 != null" >
+        founder_6 = #{founder6,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=INTEGER},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.thu.info.model.Company" >
+    update company
+    set name = #{name,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      setup_time = #{setupTime,jdbcType=TIMESTAMP},
+      city = #{city,jdbcType=VARCHAR},
+      financing_step = #{financingStep,jdbcType=VARCHAR},
+      field_1 = #{field1,jdbcType=VARCHAR},
+      field_2 = #{field2,jdbcType=VARCHAR},
+      field_3 = #{field3,jdbcType=VARCHAR},
+      company_img = #{companyImg,jdbcType=VARCHAR},
+      founder_1 = #{founder1,jdbcType=VARCHAR},
+      founder_2 = #{founder2,jdbcType=VARCHAR},
+      founder_3 = #{founder3,jdbcType=VARCHAR},
+      founder_4 = #{founder4,jdbcType=VARCHAR},
+      founder_5 = #{founder5,jdbcType=VARCHAR},
+      founder_6 = #{founder6,jdbcType=VARCHAR},
+      source = #{source,jdbcType=INTEGER},
+      introduction = #{introduction,jdbcType=LONGVARCHAR}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.thu.info.model.Company" >
+    update company
+    set name = #{name,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      setup_time = #{setupTime,jdbcType=TIMESTAMP},
+      city = #{city,jdbcType=VARCHAR},
+      financing_step = #{financingStep,jdbcType=VARCHAR},
+      field_1 = #{field1,jdbcType=VARCHAR},
+      field_2 = #{field2,jdbcType=VARCHAR},
+      field_3 = #{field3,jdbcType=VARCHAR},
+      company_img = #{companyImg,jdbcType=VARCHAR},
+      founder_1 = #{founder1,jdbcType=VARCHAR},
+      founder_2 = #{founder2,jdbcType=VARCHAR},
+      founder_3 = #{founder3,jdbcType=VARCHAR},
+      founder_4 = #{founder4,jdbcType=VARCHAR},
+      founder_5 = #{founder5,jdbcType=VARCHAR},
+      founder_6 = #{founder6,jdbcType=VARCHAR},
+      source = #{source,jdbcType=INTEGER}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+</mapper>
